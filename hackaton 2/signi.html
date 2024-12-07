@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Coronu</a>
+            <div class="d-flex mx-auto align-items-center">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Market</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Career</a></li>
+                </ul>
+                <button class="btn btn-primary ms-2" onclick="window.location.href='sign-up.html'">Sign Up</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sign In Form Section -->
+    <div class="container my-5">
+        <h2 class="text-center">Sign In</h2>
+        <form id="signInForm">
+            <div class="mb-3">
+                <label for="signInEmail" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="signInEmail" placeholder="Enter email" required>
+            </div>
+            <div class="mb-3">
+                <label for="signInPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" id="signInPassword" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Sign In</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-3">
+        <p>&copy; 2024 Coronu - All Rights Reserved</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script type="module" src="script.js"></script>
+
+    <script>
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyD6EUBAT6Vuhjp17fCi-57DnRibSaEuTtY",
+            authDomain: "hackathon-f9094.firebaseapp.com",
+            projectId: "hackathon-f9094",
+            storageBucket: "hackathon-f9094.firebasestorage.app",
+            messagingSenderId: "1042760528442",
+            appId: "1:1042760528442:web:43b2a0bee6ac012a82bb03",
+            measurementId: "G-LHBE5YTMK3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Sign In form submission
+        document.getElementById('signInForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('signInEmail').value;
+            const password = document.getElementById('signInPassword').value;
+
+            // Firebase Sign In
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    console.log('Sign In Successful:', user);
+                    alert('Sign In Successful! Redirecting...');
+                    window.location.href = 'dashboard.html'; // Redirect to user dashboard
+                })
+                .catch((error) => {
+                    console.error('Sign In Error:', error);
+                    alert('Error: ' + error.message); // Show error message
+                });
+        });
+    </script>
+
+</body>
+</html>
